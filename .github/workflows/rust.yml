@@ -27,6 +27,18 @@ jobs:
         with:
           targets: wasm32-unknown-unknown
 
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/bin
+            ~/.cargo/git
+            ~/.cargo/registry
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          
+
       - name: Install trunk
         run: wget -qO- https://github.com/trunk-rs/trunk/releases/download/v0.21.13/trunk-x86_64-unknown-linux-gnu.tar.gz \
              | tar -xzf-
@@ -34,7 +46,7 @@ jobs:
       - name: Build the Rust WASM app and assets
         run: |
           cd atlas
-          ../trunk build --release --public-url ${{ github.event.repository.name }} --features webgl
+          ../trunk build --release --features webgl --public-url /atlas-web/  
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
