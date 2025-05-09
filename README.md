@@ -1,1 +1,1 @@
-# atlas-web demo
+# Atlas Web (Demo)
