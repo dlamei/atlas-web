@@ -1095,8 +1095,8 @@ impl AtlasApp {
             .unwrap()
             .dyn_into::<wgpu::web_sys::HtmlCanvasElement>()
             .unwrap();
-        let canvas_width = canvas.width();
-        let canvas_height = canvas.height();
+        let canvas_width = canvas.width().max(1);
+        let canvas_height = canvas.height().max(1);
         self.last_size = (canvas_width, canvas_height).into();
         attributes = attributes.with_canvas(Some(canvas));
 
@@ -1383,6 +1383,8 @@ impl WGPU {
     }
 
     pub fn create_framebuffer_resolve_texture(&self, width: u32, height: u32) -> wgpu::TextureView {
+        let width = width.max(1);
+        let height = height.max(1);
         let texture = self.device.create_texture(
             &(wgpu::TextureDescriptor {
                 label: Some("Framebuffer Resolve Texture"),
@@ -1414,6 +1416,8 @@ impl WGPU {
     }
 
     pub fn create_framebuffer_msaa_texture(&self, width: u32, height: u32) -> Option<wgpu::TextureView> {
+        let width = width.max(1);
+        let height = height.max(1);
         if !MULTISAMPLE {
             return None;
         }
@@ -1449,6 +1453,8 @@ impl WGPU {
     }
 
     pub fn create_depth_texture(&self, width: u32, height: u32) -> wgpu::TextureView {
+        let width = width.max(1);
+        let height = height.max(1);
         let texture = self.device.create_texture(
             &(wgpu::TextureDescriptor {
                 label: Some("Depth Texture"),
