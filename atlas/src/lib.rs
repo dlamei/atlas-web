@@ -824,6 +824,7 @@ impl AtlasApp {
                 label: Some("Render Encoder"),
         });
 
+        if renderer.wgpu.surface_config.width > 1 && renderer.wgpu.surface_config.height > 1 
         {
             let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
                 color_attachments: &[Some(wgpu::RenderPassColorAttachment {
@@ -1846,6 +1847,10 @@ impl AtlasRenderer {
     }
 
     fn render_model_inst(&self, model: &ModelInstance) {
+        if self.wgpu.surface_config.width == 1 || self.wgpu.surface_config.height == 1 {
+            return
+        }
+
         let mut encoder =
             self.wgpu.device
                 .create_command_encoder(&wgpu::CommandEncoderDescriptor {
@@ -2043,6 +2048,7 @@ impl AtlasRenderer {
 
         encoder.insert_debug_marker("Render scene");
 
+        if self.wgpu.surface_config.width > 1 && self.wgpu.surface_config.height > 1 
         {
             let mut render_pass = encoder
                 .begin_render_pass(&wgpu::RenderPassDescriptor {
