@@ -1,0 +1,7 @@
+[target.'cfg(not(target_arch = "wasm32"))']
+rustflags = ["-C", "target-cpu=native"]
+
+# For the wasm32-unknown-unknown target:
+[target.'cfg(target_arch = "wasm32")']
+rustflags = ["--cfg", "getrandom_backend=\"wasm_js\""]
+
