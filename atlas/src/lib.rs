@@ -1795,6 +1795,8 @@ impl AtlasRenderer {
     }
 
     fn resize_viewport(&mut self, width: u32, height: u32) {
+        let width = width.max(1);
+        let height = height.max(1);
         self.framebuffer_msaa = self.wgpu.create_framebuffer_msaa_texture(width, height);
         self.framebuffer_resolve = self.wgpu.create_framebuffer_resolve_texture(width, height);
         self.depth_texture_view = self.wgpu.create_depth_texture(width, height);
