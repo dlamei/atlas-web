@@ -1,3 +1,3 @@
-# Atlas Web (Demo)
+# Atlas Web
 
-[Website](https://dlamei.github.io/atlas-web/)
+[demo](https://dlamei.github.io/atlas-web/)
