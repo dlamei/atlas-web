@@ -46,7 +46,7 @@ jobs:
       - name: Build the Rust WASM app and assets
         run: |
           cd atlas
-          ../trunk build --release --features webgl --public-url /atlas-web/  
+          ../trunk build --release --features webgl 
 
       - name: Configure Pages
         uses: actions/configure-pages@v4
