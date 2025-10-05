@@ -3,6 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <link rel="icon" type="image/png" href="../res/icon.png">
     <title>Atlas</title>
     <style>
       html, body, .root {
@@ -22,11 +24,11 @@
         display: block;
       }
     </style>
-  </head>
+  <link rel="modulepreload" href="/wgpui-6ed8b53cf609e98b.js" crossorigin="anonymous" integrity="sha384-joXoHl+mjoNVQZozJ5YuYBgbSdvKin6/CSUDs5gXzzjN6wrZ0ualIQsGixI1Q79O"><link rel="preload" href="/wgpui-6ed8b53cf609e98b_bg.wasm" crossorigin="anonymous" integrity="sha384-roRCuFyVN+kqDDdc3INgsivdWhbUPRV1eFT6LqF2Hghyu3hC/LnK33qP9wJ5cMYs" as="fetch" type="application/wasm"></head>
 
   <body>
     <script>
-      const MAX_DIM = 3840; 
+      <!-- const MAX_DIM = 3840; --> 
 
       function resizeCanvas() {
         const canvas = document.getElementById("canvas");
@@ -38,18 +40,29 @@
         const physW = Math.round(cssW * dpr);
         const physH = Math.round(cssH * dpr);
 
-        const finalW = physW > MAX_DIM ? MAX_DIM : physW;
-        const finalH = physH > MAX_DIM ? MAX_DIM : physH;
+        <!-- const finalW = physW > MAX_DIM ? MAX_DIM : physW; -->
+        <!-- const finalH = physH > MAX_DIM ? MAX_DIM : physH; -->
 
-        canvas.width  = finalW;
-        canvas.height = finalH;
+        canvas.width  = physW;
+        canvas.height = physH;
       }
 
       window.addEventListener("load",   resizeCanvas);
       window.addEventListener("resize", resizeCanvas);
     </script>
 
-    <link data-trunk rel="rust" href="Cargo.toml" data-bin="atlas" />
+    
+<script type="module">
+import init, * as bindings from '/wgpui-6ed8b53cf609e98b.js';
+const wasm = await init({ module_or_path: '/wgpui-6ed8b53cf609e98b_bg.wasm' });
+
+
+window.wasmBindings = bindings;
+
+
+dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
+
+</script>
 
     <div class="root">
       <canvas id="canvas" class="main-canvas"></canvas>
